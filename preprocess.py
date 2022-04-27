@@ -47,7 +47,7 @@ def process_dataset(file_path):
 def process_datasets(file_paths):
     trainX, trainY = [], []
     
-    for file_path in file_paths[0:2]:
+    for file_path in file_paths:
         currX, currY = process_dataset(file_path)
         print("Loaded", file_path)
         trainX.extend(currX)
