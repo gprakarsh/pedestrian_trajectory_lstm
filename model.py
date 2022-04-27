@@ -9,17 +9,19 @@ from preprocess import process_datasets, process_dataset
 
 file_paths = ["./train/real_data/biwi_hotel.ndjson", "./train/real_data/cff_06.ndjson", "./train/real_data/cff_07.ndjson", "./train/real_data/cff_08.ndjson", "./train/real_data/cff_09.ndjson", "./train/real_data/cff_10.ndjson", "./train/real_data/cff_12.ndjson", "./train/real_data/cff_13.ndjson", "./train/real_data/cff_14.ndjson", "./train/real_data/cff_15.ndjson", "./train/real_data/cff_16.ndjson", "./train/real_data/cff_17.ndjson", "./train/real_data/cff_18.ndjson", "./train/real_data/crowds_students001.ndjson", "./train/real_data/crowds_students003.ndjson", "./train/real_data/crowds_zara01.ndjson", "./train/real_data/crowds_zara03.ndjson", "./train/real_data/lcas.ndjson", "./train/real_data/wildtrack.ndjson"]
 
+device = 'cuda' if torch.is_cuda_available() else 'cpu'
+
 x, y = process_datasets(file_paths[0:len(file_paths)-1])
 x, y = np.array(x), np.array(y)
 
-trainX = Variable(torch.from_numpy(x))
-trainY = Variable(torch.from_numpy(y))
+trainX = Variable(torch.from_numpy(x)).to(device)
+trainY = Variable(torch.from_numpy(y)).to(device)
 
 x, y = process_dataset(file_paths[len(file_paths)-1])
 x, y = np.array(x), np.array(y)
 
-testX = Variable(torch.from_numpy(x))
-testY = Variable(torch.from_numpy(y))
+testX = Variable(torch.from_numpy(x)).to(device)
+testY = Variable(torch.from_numpy(y)).to(device)
 
 seq_length = 8
 
@@ -62,7 +64,7 @@ num_layers = 1
 
 num_classes = 2 
 
-lstm = LSTM(num_classes, input_size, hidden_size, num_layers)
+lstm = LSTM(num_classes, input_size, hidden_size, num_layers).to(device)
 lstm.double()
 
 criterion = torch.nn.MSELoss()    # mean-squared error for regression
@@ -73,10 +75,10 @@ outputs = []
 for epoch in range(num_epochs):
 
     h_in = Variable(torch.zeros(
-            num_layers, trainX.size(0), hidden_size, dtype=torch.float64))
+            num_layers, trainX.size(0), hidden_size, dtype=torch.float64)).to(device)
         
     c_in = Variable(torch.zeros(
-            num_layers, trainX.size(0), hidden_size, dtype=torch.float64))
+            num_layers, trainX.size(0), hidden_size, dtype=torch.float64)).to(device)
 
     outputs, _, _ = lstm(trainX, h_in, c_in)
     optimizer.zero_grad()
@@ -96,10 +98,10 @@ input = torch.zeros((1, 20, 2), dtype=torch.float64)
 input[:, 0:8, :] = testX[1]
 
 h_in = Variable(torch.zeros(
-            num_layers, input.size(0), hidden_size, dtype=torch.float64))
+            num_layers, input.size(0), hidden_size, dtype=torch.float64)).to(device)
         
 c_in = Variable(torch.zeros(
-            num_layers, input.size(0), hidden_size, dtype=torch.float64))
+            num_layers, input.size(0), hidden_size, dtype=torch.float64)).to(device)
 
 
 for i in range(future):
