@@ -49,6 +49,7 @@ def process_datasets(file_paths):
     
     for file_path in file_paths[0:2]:
         currX, currY = process_dataset(file_path)
+        print("Loaded", file_path)
         trainX.extend(currX)
         trainY.extend(currY)
 
