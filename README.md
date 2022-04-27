@@ -1,5 +1,5 @@
 # pedestrian_trajectory_lstm
 
-curl https://github.com/vita-epfl/trajnetplusplusdata/releases/download/v4.0/train.zip --output train.zip
+wget https://github.com/vita-epfl/trajnetplusplusdata/releases/download/v4.0/train.zip
 
 unzip train.zip

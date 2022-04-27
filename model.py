@@ -9,7 +9,7 @@ from preprocess import process_datasets, process_dataset
 
 file_paths = ["./train/real_data/biwi_hotel.ndjson", "./train/real_data/cff_06.ndjson", "./train/real_data/cff_07.ndjson", "./train/real_data/cff_08.ndjson", "./train/real_data/cff_09.ndjson", "./train/real_data/cff_10.ndjson", "./train/real_data/cff_12.ndjson", "./train/real_data/cff_13.ndjson", "./train/real_data/cff_14.ndjson", "./train/real_data/cff_15.ndjson", "./train/real_data/cff_16.ndjson", "./train/real_data/cff_17.ndjson", "./train/real_data/cff_18.ndjson", "./train/real_data/crowds_students001.ndjson", "./train/real_data/crowds_students003.ndjson", "./train/real_data/crowds_zara01.ndjson", "./train/real_data/crowds_zara03.ndjson", "./train/real_data/lcas.ndjson", "./train/real_data/wildtrack.ndjson"]
 
-x, y = process_datasets(file_paths[0:len(file_paths-1)])
+x, y = process_datasets(file_paths[0:len(file_paths)-1])
 x, y = np.array(x), np.array(y)
 
 trainX = Variable(torch.from_numpy(x))
