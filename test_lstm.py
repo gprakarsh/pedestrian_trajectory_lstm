@@ -52,4 +52,4 @@ def main(file_paths, model_path, input_length, num_predictions, num_layers, inpu
     actual_file.close()
 
 if __name__ == "__main__":
-    main(["./train/real_data/cff_08.ndjson"], "./lstm_1", 8, 12, 1, 2, 50, 2)
+    main(["./train/real_data/crowds_students003.ndjson"], "./lstm_1", 8, 12, 1, 2, 50, 2)

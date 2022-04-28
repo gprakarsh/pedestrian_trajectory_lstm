@@ -3,7 +3,7 @@ from torch.autograd import Variable
 from preprocess import process_dataset, process_datasets
 import numpy as np
 from lstm import LSTM
-
+import sys
 
 
 def main(file_paths, input_length, num_epochs, learning_rate, input_size, hidden_size, output_size, num_layers, save_path):
@@ -32,6 +32,8 @@ def main(file_paths, input_length, num_epochs, learning_rate, input_size, hidden
     for epoch in range(num_epochs):
         loss = None
         for i in range(len(trainX)):
+            sys.stdout.write("\r{0}".format(i))
+            sys.stdout.flush()
             currX = trainX[i].reshape(1,8,2).to(device)
             currY = trainY[i].reshape(1,2).to(device)
 
@@ -52,10 +54,10 @@ def main(file_paths, input_length, num_epochs, learning_rate, input_size, hidden
             loss.backward()
             optimizer.step()
 
-        if epoch % 100 == 0:
+        if epoch % 1 == 0:
             print("Epoch: %d, loss: %1.5f" % (epoch, loss.item()))
     
     torch.save(model.state_dict(), save_path)
 
 if __name__ == '__main__':
-    main(["./train/real_data/cff_06.ndjson", "./train/real_data/cff_07.ndjson"], 8, 500, 0.01, 2, 50, 2, 1, "./lstm_1")
+    main(["./train/real_data/crowds_students001.ndjson"], 8, 50, 0.01, 2, 50, 2, 1, "./lstm_1.pt")
