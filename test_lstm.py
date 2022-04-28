@@ -47,7 +47,7 @@ def main(file_paths, model_path, input_length, num_predictions, num_layers, inpu
     preds_file.write(content)
     preds_file.close()
     actual_file = open("actual_trajectories.txt", "w+")
-    content = str(data[0:20])
+    content = str(data[0:21])
     actual_file.write(content)
     actual_file.close()
 
