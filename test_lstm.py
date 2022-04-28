@@ -19,7 +19,7 @@ def main(file_paths, model_path, input_length, num_predictions, num_layers, inpu
     print("Datasets ready!")
 
     print("Initializing model")
-    input = torch.zeros((1, input_length + num_predictions, 2), dtype=torch.float64)
+    input = torch.zeros((1, input_length + num_predictions, 2), dtype=torch.float64).to(device)
     input[:, 0:input_length, :] = testX[1]
 
     h_in = Variable(torch.zeros(
@@ -29,6 +29,7 @@ def main(file_paths, model_path, input_length, num_predictions, num_layers, inpu
                 num_layers, input.size(0), hidden_size, dtype=torch.float64)).to(device)
 
     model = LSTM(output_size, input_size, hidden_size, num_layers, input_length).to(device)
+    model.double()
     model.load_state_dict(torch.load(model_path))
     model.eval()
     print("LSTM model initialized")
