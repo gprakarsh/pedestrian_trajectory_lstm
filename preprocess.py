@@ -41,16 +41,16 @@ def process_dataset(file_path):
         x.extend(currX)
         y.extend(currY)
 
-    return x, y
+    return x, y, pedestrian_data
 
 
 def process_datasets(file_paths):
     trainX, trainY = [], []
     
     for file_path in file_paths:
-        currX, currY = process_dataset(file_path)
+        currX, currY, dataset = process_dataset(file_path)
         print("Loaded", file_path)
         trainX.extend(currX)
         trainY.extend(currY)
 
-    return trainX, trainY
+    return trainX, trainY, dataset

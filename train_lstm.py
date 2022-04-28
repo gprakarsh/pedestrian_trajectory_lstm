@@ -12,7 +12,7 @@ def main(file_paths, input_length, num_epochs, learning_rate, input_size, hidden
     print("Device: ", device)
 
     print("Data processing started: ")
-    x, y = process_datasets(file_paths)
+    x, y, _ = process_datasets(file_paths)
     x, y = np.array(x), np.array(y)
     print("Datasets ready!")
 
@@ -52,14 +52,10 @@ def main(file_paths, input_length, num_epochs, learning_rate, input_size, hidden
             loss.backward()
             optimizer.step()
 
-        if epoch % 1 == 0:
+        if epoch % 100 == 0:
             print("Epoch: %d, loss: %1.5f" % (epoch, loss.item()))
-        
-    # torch.save({
-    #     'state_dict': model.state_dict()
-    #     # ,'optimizer_state_dict': optimizer.state_dict() # only if breaking batches
-    #     }, save_path)
+    
     torch.save(model.state_dict(), save_path)
 
 if __name__ == '__main__':
-    main(["./train/real_data/biwi_hotel.ndjson"], 8, 500, 0.01, 2, 50, 2, 1, "./lstm_1")
+    main(file_paths = ["./train/real_data/biwi_hotel.ndjson", "./train/real_data/cff_06.ndjson", "./train/real_data/cff_07.ndjson", "./train/real_data/cff_08.ndjson", "./train/real_data/cff_09.ndjson", "./train/real_data/cff_10.ndjson", "./train/real_data/cff_12.ndjson", "./train/real_data/cff_13.ndjson", "./train/real_data/cff_14.ndjson", "./train/real_data/cff_15.ndjson", "./train/real_data/cff_16.ndjson", "./train/real_data/cff_17.ndjson", "./train/real_data/cff_18.ndjson", "./train/real_data/crowds_students001.ndjson", "./train/real_data/crowds_students003.ndjson", "./train/real_data/crowds_zara01.ndjson", "./train/real_data/crowds_zara03.ndjson", "./train/real_data/lcas.ndjson"], 8, 500, 0.01, 2, 50, 2, 1, "./lstm_1")

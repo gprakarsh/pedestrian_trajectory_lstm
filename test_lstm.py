@@ -11,7 +11,7 @@ def main(file_paths, model_path, input_length, num_predictions, num_layers, inpu
     print("Device: ", device)
 
     print("Data processing started:")
-    x, y = process_datasets(file_paths)
+    x, y, data = process_datasets(file_paths)
     x, y = np.array(x), np.array(y)
 
     testX = Variable(torch.from_numpy(x))
@@ -42,6 +42,14 @@ def main(file_paths, model_path, input_length, num_predictions, num_layers, inpu
             input[:, i + input_length, :] = out
     print("Generated predictions")
     print(input)
+    preds_file = open("predicted_trajectories.txt", "w+")
+    content = str(input)
+    preds_file.write(content)
+    preds_file.close()
+    actual_file = open("actual_trajectories.txt", "w+")
+    content = str(data[0:20])
+    actual_file.write(content)
+    actual_file.close()
 
 if __name__ == "__main__":
     main(["./train/real_data/wildtrack.ndjson"], "./lstm_1", 8, 12, 1, 2, 50, 2)
