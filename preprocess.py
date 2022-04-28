@@ -35,22 +35,24 @@ def sliding_windows(data, seq_length):
 def process_dataset(file_path):
     df = get_trajectories(file_path)
     seq_length = 8
-    x, y = [], []
+    x, y, dataset = [], [], []
     for pedestrian_data in df.values():
         currX, currY = sliding_windows(pedestrian_data, seq_length)
         x.extend(currX)
         y.extend(currY)
+        dataset.extend(pedestrian_data)
 
-    return x, y, pedestrian_data
+    return x, y, dataset
 
 
 def process_datasets(file_paths):
-    trainX, trainY = [], []
+    trainX, trainY, dataset = [], [], []
     
     for file_path in file_paths:
-        currX, currY, dataset = process_dataset(file_path)
+        currX, currY, currDataset = process_dataset(file_path)
         print("Loaded", file_path)
         trainX.extend(currX)
         trainY.extend(currY)
+        dataset.extend(currDataset)
 
     return trainX, trainY, dataset

@@ -13,7 +13,7 @@ def main(file_paths, model_path, input_length, num_predictions, num_layers, inpu
     print("Data processing started:")
     x, y, data = process_datasets(file_paths)
     x, y = np.array(x), np.array(y)
-
+    
     testX = Variable(torch.from_numpy(x))
     testY = Variable(torch.from_numpy(y))
     print("Datasets ready!")
